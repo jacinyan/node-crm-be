@@ -31,8 +31,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   keys: ['key1', 'key2']
 // }))
 
-// allow cors(achieved with webpack proxy config as well)
-app.use(cors())
+// allow cors
+app.use(cors({exposedHeaders:'X-Access-Token'}))
 
 // specify users routes
 app.use('/api/users', usersRouter);

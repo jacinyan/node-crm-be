@@ -25,13 +25,13 @@ exports.compare = (myPlaintextPassword, hash) => {
 exports.sign = (username) => {
     // const privateKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_private_key.pem'))
 
-    const token = jwt.sign({ username }, process.env.RSA_PRIVATE_KEY, { algorithm: 'RS256', expiresIn: '2h' })
+    const token = jwt.sign({ username }, JSON.parse(process.env.RSA_PRIVATE_KEY), { algorithm: 'RS256', expiresIn: '2h' })
     return token
 }
 
 exports.verify = (token) => {
     // const publicKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_public_key.pem'))
     
-    const result = jwt.verify(token, process.env.RSA_PUBLIC_KEY)
+    const result = jwt.verify(token, JSON.parse(process.env.RSA_PUBLIC_KEY))
     return result
 }

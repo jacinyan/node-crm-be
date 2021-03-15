@@ -1,6 +1,4 @@
 const bcrypt = require('bcrypt')
-const fs = require('fs')
-const path = require('path')
 const jwt = require('jsonwebtoken')
 
 exports.hash = (myPlaintextPassword) => {
@@ -25,13 +23,15 @@ exports.compare = (myPlaintextPassword, hash) => {
 }
 
 exports.sign = (username) => {
-    const privateKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_private_key.pem'))
-    const token = jwt.sign({ username }, privateKey, { algorithm: 'RS256', expiresIn: '2h' })
+    // const privateKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_private_key.pem'))
+
+    const token = jwt.sign({ username }, process.env.RSA_PRIVATE_KEY, { algorithm: 'RS256', expiresIn: '2h' })
     return token
 }
 
 exports.verify = (token) => {
-    const publicKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_public_key.pem'))
-    const result = jwt.verify(token, publicKey)
+    // const publicKey = fs.readFileSync(path.resolve(__dirname, '../keys/rsa_public_key.pem'))
+    
+    const result = jwt.verify(token, process.env.RSA_PUBLIC_KEY)
     return result
 }
